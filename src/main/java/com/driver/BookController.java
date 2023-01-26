@@ -40,7 +40,7 @@ public class BookController {
 
     public BookController(){
         this.bookList = new ArrayList<Book>();
-        this.id = 1;
+        setId(1);
     }
 
     // post request /create-book
@@ -91,7 +91,7 @@ public class BookController {
             }
         }
 
-        return new ResponseEntity<>("No book with "+id+" id found",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("No book with id found",HttpStatus.NOT_FOUND);
     }
 
     // get request /get-all-books

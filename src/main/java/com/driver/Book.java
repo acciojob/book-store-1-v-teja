@@ -15,9 +15,9 @@ public class Book {
      }
 
     public Book(String name, String genre, String author) {
-        this.name = name;
-        this.genre = genre;
-        this.author = author;
+        setName(name);
+        setGenre(genre);
+        setAuthor(author);
     }
 
     public int getId() {
