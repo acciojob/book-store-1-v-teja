@@ -40,7 +40,7 @@ public class BookController {
 
     public BookController(){
         this.bookList = new ArrayList<Book>();
-        setId(1);
+        this.id = 0;
     }
 
     // post request /create-book
@@ -48,19 +48,9 @@ public class BookController {
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
-      int id = book.getId();
-      for(Book book1: getBookList()){
-          if(book1.getId()==id){
-              return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-          }
-      }
-      if(getBookList().isEmpty()){
-          List<Book> list = new ArrayList<>();
-          list.add(book);
-          setBookList(list);
-      }else{
-          getBookList().add(book);
-      }
+        book.setId(id);
+        getBookList().add(id,book);
+        id++;
 
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
@@ -69,9 +59,10 @@ public class BookController {
     // pass id as path variable
     // getBookById()
     @GetMapping("/get-book-by-id/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable("id") int id){
+    public ResponseEntity<Book> getBookById(@PathVariable("id") String id){
+        int n = Integer.parseInt(id);
         for(Book book: getBookList()){
-            if(book.getId()==id){
+            if(book.getId()==n){
                 return new ResponseEntity<>(book,HttpStatus.FOUND);
             }
         }
@@ -83,9 +74,10 @@ public class BookController {
     // pass id as path variable
     // deleteBookById()
     @DeleteMapping("/delete-book-by-id/{id}")
-    public ResponseEntity<String> deleteBookById(@PathVariable("id") int id){
+    public ResponseEntity<String> deleteBookById(@PathVariable("id") String id){
+        int n = Integer.parseInt(id);
         for(Book book: getBookList()){
-            if(book.getId()==id){
+            if(book.getId()==n){
                 getBookList().remove(book);
                 return new ResponseEntity<>("Deleted",HttpStatus.ACCEPTED);
             }
